@@ -20,12 +20,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Copy and make startup script executable
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
-
 # Expose port
 EXPOSE 8000
 
-# Start command - use startup script
-CMD ["/app/start.sh"]
+# Start command - use Python startup script
+CMD ["python", "start.py"]
