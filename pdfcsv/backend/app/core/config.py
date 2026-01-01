@@ -1,13 +1,14 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+import os
 
 
 class Settings(BaseSettings):
     """Application settings"""
     
     # Database
-    DATABASE_URL: str
-    REDIS_URL: str = "redis://localhost:6379"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://localhost:5432/postgres")
+    REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379")
     
     # Security
     SECRET_KEY: str = "default-secret-key-change-in-production"
@@ -53,4 +54,22 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-settings = Settings()
+# Try to create settings, use defaults if env vars not available (during build)
+try:
+    settings = Settings()
+except Exception as e:
+    # During build phase, environment variables might not be available
+    # Use all default values
+    print(f"Warning: Could not load settings from environment: {e}")
+    print("Using default configuration values")
+    settings = Settings(
+        DATABASE_URL=os.getenv("DATABASE_URL", "postgresql://localhost:5432/postgres"),
+        REDIS_URL=os.getenv("REDIS_URL", "redis://localhost:6379"),
+        SECRET_KEY=os.getenv("SECRET_KEY", "build-secret"),
+        OPENAI_API_KEY=os.getenv("OPENAI_API_KEY", "sk-build"),
+        STRIPE_SECRET_KEY=os.getenv("STRIPE_SECRET_KEY", "sk_build"),
+        STRIPE_PUBLISHABLE_KEY=os.getenv("STRIPE_PUBLISHABLE_KEY", "pk_build"),
+        QUICKBOOKS_CLIENT_ID=os.getenv("QUICKBOOKS_CLIENT_ID", "build"),
+        QUICKBOOKS_CLIENT_SECRET=os.getenv("QUICKBOOKS_CLIENT_SECRET", "build"),
+        QUICKBOOKS_REDIRECT_URI=os.getenv("QUICKBOOKS_REDIRECT_URI", "https://build.local")
+    )
