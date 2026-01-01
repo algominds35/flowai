@@ -20,8 +20,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Copy and make startup script executable
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
 # Expose port
 EXPOSE 8000
 
-# Start command - use shell form so $PORT expands
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Start command - use startup script
+CMD ["/app/start.sh"]
