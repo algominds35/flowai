@@ -7,26 +7,26 @@ class Settings(BaseSettings):
     
     # Database
     DATABASE_URL: str
-    REDIS_URL: str
+    REDIS_URL: str = "redis://localhost:6379"
     
     # Security
-    SECRET_KEY: str
+    SECRET_KEY: str = "default-secret-key-change-in-production"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     ALGORITHM: str = "HS256"
     
     # OpenAI
-    OPENAI_API_KEY: str
+    OPENAI_API_KEY: str = "sk-fake-openai-key"
     
     # Stripe
-    STRIPE_SECRET_KEY: str
-    STRIPE_PUBLISHABLE_KEY: str
+    STRIPE_SECRET_KEY: str = "sk_test_fake"
+    STRIPE_PUBLISHABLE_KEY: str = "pk_test_fake"
     STRIPE_WEBHOOK_SECRET: Optional[str] = None
     STRIPE_PRICE_ID_PRO: Optional[str] = None
     
     # QuickBooks
-    QUICKBOOKS_CLIENT_ID: str
-    QUICKBOOKS_CLIENT_SECRET: str
-    QUICKBOOKS_REDIRECT_URI: str
+    QUICKBOOKS_CLIENT_ID: str = "fake_id"
+    QUICKBOOKS_CLIENT_SECRET: str = "fake_secret"
+    QUICKBOOKS_REDIRECT_URI: str = "https://example.com/callback"
     QUICKBOOKS_ENVIRONMENT: str = "sandbox"
     
     # Email (Optional)
