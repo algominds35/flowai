@@ -33,6 +33,7 @@ class DocumentResponse(DocumentBase):
     document_type: DocumentType
     page_count: int
     file_size: int
+    ocr_confidence: Optional[int] = None
     error_message: Optional[str] = None
     synced_to_quickbooks: bool
     created_at: datetime
