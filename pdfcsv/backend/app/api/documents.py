@@ -166,3 +166,27 @@ def delete_document(
     db.commit()
     
     return None
+
+
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+def delete_all_documents(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Delete all documents for current user (for debugging)"""
+    
+    documents = db.query(Document).filter(Document.user_id == current_user.id).all()
+    
+    for document in documents:
+        # Delete file if exists
+        if os.path.exists(document.file_path):
+            try:
+                os.remove(document.file_path)
+            except:
+                pass
+        db.delete(document)
+    
+    db.commit()
+    logger.info(f"Deleted {len(documents)} documents for user {current_user.id}")
+    
+    return None
