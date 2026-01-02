@@ -18,9 +18,14 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await authApi.login(email, password);
-      router.push('/dashboard');
+      console.log('Attempting login...');
+      const result = await authApi.login(email, password);
+      console.log('Login successful!', result);
+      
+      // Force page reload to dashboard
+      window.location.href = '/dashboard';
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.response?.data?.detail || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
