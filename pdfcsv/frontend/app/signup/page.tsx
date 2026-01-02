@@ -22,7 +22,8 @@ export default function SignupPage() {
       await authApi.register(email, password, fullName);
       // Auto-login after registration
       await authApi.login(email, password);
-      router.push('/dashboard');
+      // Force full page reload to ensure token is saved
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Registration failed. Please try again.');
     } finally {

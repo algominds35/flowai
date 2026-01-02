@@ -13,6 +13,7 @@ export const api = axios.create({
 // Add auth token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
+  console.log('API Request:', config.method?.toUpperCase(), config.url, token ? 'with token' : 'NO TOKEN');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -45,7 +46,9 @@ export const authApi = {
   login: async (email: string, password: string) => {
     const response = await api.post('/auth/login', { email, password });
     const { access_token } = response.data;
+    console.log('Login successful, saving token:', access_token ? 'YES' : 'NO');
     localStorage.setItem('access_token', access_token);
+    console.log('Token saved to localStorage');
     return response.data;
   },
 
