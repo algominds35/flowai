@@ -30,6 +30,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadData();
+    
+    // Auto-refresh every 5 seconds to show document processing updates
+    const interval = setInterval(() => {
+      loadData();
+    }, 5000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const loadData = async () => {
@@ -40,9 +47,15 @@ export default function DashboardPage() {
       ]);
       setUser(userData);
       setDocuments(docsData.documents);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load data:', error);
-      router.push('/login');
+      // Only redirect to login if it's an auth error (401)
+      if (error.response?.status === 401) {
+        router.push('/login');
+      } else {
+        // For other errors, just log and stay on page
+        alert('Failed to load data. Please refresh the page.');
+      }
     } finally {
       setLoading(false);
     }
@@ -54,11 +67,18 @@ export default function DashboardPage() {
 
     setUploading(true);
     try {
-      await documentsApi.upload(file);
-      await loadData(); // Reload documents
-      alert('Document uploaded successfully!');
+      const result = await documentsApi.upload(file);
+      console.log('Upload successful:', result);
+      
+      // Wait a bit for the document to appear in the list
+      setTimeout(async () => {
+        await loadData(); // Reload documents
+      }, 500);
+      
+      alert('Document uploaded successfully! Processing will start shortly.');
     } catch (error: any) {
-      alert(error.response?.data?.detail || 'Upload failed');
+      console.error('Upload failed:', error);
+      alert(error.response?.data?.detail || 'Upload failed. Please try again.');
     } finally {
       setUploading(false);
     }
