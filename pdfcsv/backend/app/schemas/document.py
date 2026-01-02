@@ -22,6 +22,9 @@ class TransactionResponse(BaseModel):
     category_confidence: Optional[int] = None
     is_verified: bool
     synced_to_quickbooks: bool
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    synced_at: Optional[datetime] = None
     
     class Config:
         from_attributes = True
