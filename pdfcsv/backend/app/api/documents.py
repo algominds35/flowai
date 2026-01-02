@@ -1,20 +1,25 @@
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List
 import os
 import uuid
+import logging
 
 from ..core.database import get_db
 from ..models.user import User
 from ..models.document import Document, DocumentStatus
 from ..schemas.document import DocumentResponse, DocumentListResponse
 from .auth import get_current_user
+from ..services.processing_service import processing_service
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 
 @router.post("/upload", response_model=DocumentResponse, status_code=status.HTTP_201_CREATED)
 async def upload_document(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -65,11 +70,28 @@ async def upload_document(
     db.commit()
     db.refresh(document)
     
-    # TODO: Trigger Celery task for OCR processing
-    # from ..tasks.ocr_task import process_document
-    # process_document.delay(document.id)
+    # Process document in background
+    logger.info(f"Queuing document {document.id} for processing")
+    background_tasks.add_task(
+        _process_document_task,
+        document_id=document.id,
+        pdf_bytes=content,
+        db=db
+    )
     
     return document
+
+
+async def _process_document_task(document_id: int, pdf_bytes: bytes, db: Session):
+    """Background task to process document"""
+    try:
+        result = await processing_service.process_document(document_id, pdf_bytes, db)
+        if result['success']:
+            logger.info(f"Document {document_id} processed successfully")
+        else:
+            logger.error(f"Document {document_id} processing failed: {result.get('error')}")
+    except Exception as e:
+        logger.error(f"Error in background processing for document {document_id}: {str(e)}")
 
 
 @router.get("/", response_model=DocumentListResponse)

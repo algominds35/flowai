@@ -17,6 +17,11 @@ class Settings(BaseSettings):
     # OpenAI
     OPENAI_API_KEY: str = "sk-fake-openai-key"
     
+    # AWS
+    AWS_ACCESS_KEY_ID: str = "fake-aws-key"
+    AWS_SECRET_ACCESS_KEY: str = "fake-aws-secret"
+    AWS_REGION: str = "us-east-1"
+    
     # Stripe
     STRIPE_SECRET_KEY: str = "sk_test_fake"
     STRIPE_PUBLISHABLE_KEY: str = "pk_test_fake"
