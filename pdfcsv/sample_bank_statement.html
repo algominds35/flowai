@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .bank-name { font-size: 24px; font-weight: bold; color: #003087; }
+        .account-info { margin: 20px 0; }
+        .account-info table { width: 100%; border-collapse: collapse; }
+        .account-info td { padding: 8px; }
+        .account-info .label { font-weight: bold; width: 200px; }
+        .transactions { margin-top: 30px; }
+        .transactions h2 { color: #003087; border-bottom: 2px solid #003087; padding-bottom: 5px; }
+        .transactions table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .transactions th { background: #f0f0f0; padding: 10px; text-align: left; border: 1px solid #ccc; }
+        .transactions td { padding: 10px; border: 1px solid #ccc; }
+        .debit { color: #c00; }
+        .credit { color: #0a0; }
+        .summary { margin-top: 30px; background: #f9f9f9; padding: 15px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="bank-name">FIRST NATIONAL BANK</div>
+        <div>123 Main Street, New York, NY 10001</div>
+        <div>Phone: (555) 123-4567</div>
+    </div>
+
+    <div class="account-info">
+        <table>
+            <tr>
+                <td class="label">Account Holder:</td>
+                <td>John Doe</td>
+                <td class="label">Statement Period:</td>
+                <td>December 1-31, 2023</td>
+            </tr>
+            <tr>
+                <td class="label">Account Number:</td>
+                <td>****1234</td>
+                <td class="label">Account Type:</td>
+                <td>Business Checking</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="transactions">
+        <h2>Transaction History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th style="text-align: right;">Debit</th>
+                    <th style="text-align: right;">Credit</th>
+                    <th style="text-align: right;">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12/01/2023</td>
+                    <td>Beginning Balance</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$5,234.50</td>
+                </tr>
+                <tr>
+                    <td>12/02/2023</td>
+                    <td>PAYROLL DEPOSIT - ACME CORP</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;" class="credit">$3,500.00</td>
+                    <td style="text-align: right;">$8,734.50</td>
+                </tr>
+                <tr>
+                    <td>12/03/2023</td>
+                    <td>CHECK #1001 - OFFICE SUPPLIES</td>
+                    <td style="text-align: right;" class="debit">$245.67</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$8,488.83</td>
+                </tr>
+                <tr>
+                    <td>12/05/2023</td>
+                    <td>STARBUCKS #4521</td>
+                    <td style="text-align: right;" class="debit">$12.50</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$8,476.33</td>
+                </tr>
+                <tr>
+                    <td>12/06/2023</td>
+                    <td>AMAZON.COM</td>
+                    <td style="text-align: right;" class="debit">$89.99</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$8,386.34</td>
+                </tr>
+                <tr>
+                    <td>12/08/2023</td>
+                    <td>AT&T WIRELESS PAYMENT</td>
+                    <td style="text-align: right;" class="debit">$125.00</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$8,261.34</td>
+                </tr>
+                <tr>
+                    <td>12/10/2023</td>
+                    <td>ELECTRIC COMPANY - UTILITY</td>
+                    <td style="text-align: right;" class="debit">$187.45</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$8,073.89</td>
+                </tr>
+                <tr>
+                    <td>12/12/2023</td>
+                    <td>CUSTOMER PAYMENT - INV #5432</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;" class="credit">$1,250.00</td>
+                    <td style="text-align: right;">$9,323.89</td>
+                </tr>
+                <tr>
+                    <td>12/15/2023</td>
+                    <td>RENT PAYMENT - 123 MAIN ST</td>
+                    <td style="text-align: right;" class="debit">$2,500.00</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$6,823.89</td>
+                </tr>
+                <tr>
+                    <td>12/16/2023</td>
+                    <td>PAYROLL DEPOSIT - ACME CORP</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;" class="credit">$3,500.00</td>
+                    <td style="text-align: right;">$10,323.89</td>
+                </tr>
+                <tr>
+                    <td>12/18/2023</td>
+                    <td>RESTAURANT - LUNCH MEETING</td>
+                    <td style="text-align: right;" class="debit">$67.80</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$10,256.09</td>
+                </tr>
+                <tr>
+                    <td>12/20/2023</td>
+                    <td>GAS STATION - SHELL</td>
+                    <td style="text-align: right;" class="debit">$45.00</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$10,211.09</td>
+                </tr>
+                <tr>
+                    <td>12/22/2023</td>
+                    <td>INTERNET SERVICE - COMCAST</td>
+                    <td style="text-align: right;" class="debit">$79.99</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$10,131.10</td>
+                </tr>
+                <tr>
+                    <td>12/26/2023</td>
+                    <td>CUSTOMER PAYMENT - INV #5499</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;" class="credit">$875.50</td>
+                    <td style="text-align: right;">$11,006.60</td>
+                </tr>
+                <tr>
+                    <td>12/28/2023</td>
+                    <td>OFFICE DEPOT - SUPPLIES</td>
+                    <td style="text-align: right;" class="debit">$156.23</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$10,850.37</td>
+                </tr>
+                <tr>
+                    <td>12/31/2023</td>
+                    <td>Ending Balance</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">$10,850.37</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="summary">
+        <h3>Account Summary</h3>
+        <table>
+            <tr>
+                <td class="label">Beginning Balance:</td>
+                <td style="text-align: right;">$5,234.50</td>
+            </tr>
+            <tr>
+                <td class="label">Total Deposits/Credits:</td>
+                <td style="text-align: right;" class="credit">$9,125.50</td>
+            </tr>
+            <tr>
+                <td class="label">Total Withdrawals/Debits:</td>
+                <td style="text-align: right;" class="debit">$3,509.63</td>
+            </tr>
+            <tr style="font-weight: bold; border-top: 2px solid #333;">
+                <td class="label">Ending Balance:</td>
+                <td style="text-align: right;">$10,850.37</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
