@@ -115,6 +115,10 @@ def list_documents(
         .all()
     )
     
+    # DEBUG: Log transaction counts
+    for doc in documents:
+        logger.info(f"🔍 Document {doc.id}: {len(doc.transactions)} transactions")
+    
     return {"documents": documents, "total": total}
 
 
@@ -138,6 +142,10 @@ def get_document(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Document not found"
         )
+    
+    # DEBUG: Log transaction count
+    logger.info(f"🔍 Document {document_id}: {len(document.transactions)} transactions loaded")
+    logger.info(f"🔍 Transaction IDs: {[t.id for t in document.transactions]}")
     
     return document
 
