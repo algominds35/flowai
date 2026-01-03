@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import Optional, List
-from datetime import datetime
+from datetime import datetime, date
 from ..models.document import DocumentStatus, DocumentType
 
 
@@ -25,6 +25,14 @@ class TransactionResponse(BaseModel):
     created_at: datetime
     updated_at: Optional[datetime] = None
     synced_at: Optional[datetime] = None
+    
+    @field_validator('transaction_date', mode='before')
+    @classmethod
+    def convert_date_to_string(cls, v):
+        """Convert date object to string"""
+        if isinstance(v, (date, datetime)):
+            return v.strftime('%Y-%m-%d')
+        return v
     
     class Config:
         from_attributes = True
