@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, BackgroundTasks
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import List
 import os
 import uuid
@@ -107,6 +107,7 @@ def list_documents(
     
     documents = (
         db.query(Document)
+        .options(joinedload(Document.transactions))
         .filter(Document.user_id == current_user.id)
         .order_by(Document.created_at.desc())
         .offset(skip)
@@ -125,7 +126,9 @@ def get_document(
 ):
     """Get a specific document with transactions"""
     
-    document = db.query(Document).filter(
+    document = db.query(Document).options(
+        joinedload(Document.transactions)
+    ).filter(
         Document.id == document_id,
         Document.user_id == current_user.id
     ).first()
